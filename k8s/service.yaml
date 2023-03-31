@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: video-cards
+  labels:
+    app: video-cards
+    coreApp: data-miner
+    type: aggregator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: video-cards
+  template:
+    metadata:
+      labels:
+        app: video-cards
+    spec:
+      containers:
+        - name: video-cards
+          image: eaglebut/video-cards:0.0.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: logging.level.org.springframework
+              value: DEBUG
+            - name: spring.boot.admin.client.url
+              value: http://10.1.0.69:8081/spring-admin
+            - name: spring.datasource.url
+              value: jdbc:postgresql://192.168.0.103:5444/db-video-cards
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: video-cards
+  labels:
+    name: video-cards
+spec:
+  selector:
+    app: video-cards
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
