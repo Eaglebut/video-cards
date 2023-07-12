@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:5432/db-video-cards
+    username: test
+    password: test
+  jpa:
+    database: postgresql
+  jooq:
+    sql-dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  application:
+    name: video-cards
+
+  boot:
+    admin:
+      client:
+        instance:
+          service-host-type: ip
+        url: http://${DATASOURCE_HOST:localhost}:8081
+  data:
+    rest:
+      base-path: /video-cards
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
