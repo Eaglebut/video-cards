@@ -8,6 +8,11 @@ spring:
     database: postgresql
   jooq:
     sql-dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    url: ${spring.datasource.url}
+    locations: classpath:db/migration
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
   application:
     name: video-cards
@@ -23,7 +28,7 @@ spring:
       base-path: /video-cards
 
 server:
-  port: 8080
+  port: 8082
 
 management:
   endpoints:
